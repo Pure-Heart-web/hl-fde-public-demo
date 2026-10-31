@@ -21,11 +21,11 @@ async function setup(t,viewport){
 }
 async function run(page){await page.locator('#sem-run').click();await page.locator('#sem-findings').waitFor();}
 async function evidence(page){
-  for(let i=0;i<7;i++){await page.locator('#flow-action').click();assert.match(await page.locator('#sem-reference blockquote').innerText(),/./);assert.equal(await page.locator('#sem-reference').evaluate(n=>n===document.activeElement),true);}
-  assert.match(await page.locator('#flow-next').innerText(),/证据已全部打开/);
+  for(let i=0;i<7;i++){await page.locator(i===0?'#flow-action':'#sem-reference button[data-document]').click();assert.match(await page.locator('#sem-reference blockquote').innerText(),/./);assert.equal(await page.locator('#sem-reference').evaluate(n=>n===document.activeElement),true);}
+  assert.match(await page.locator('#flow-next').innerText(),/证据已全部打开/);assert.equal(await page.locator('#sem-reference a[href="#sem-human"]').count(),1);
 }
 async function confirm(page){await page.locator('#sem-review').selectOption({label:'等待客户补充资料'});await page.locator('#sem-note').fill('合成演示：当前曲线及介质条件需补充。');await page.locator('#sem-ack').check();await page.locator('#sem-save-review').click();}
-async function download(page){const pending=page.waitForEvent('download');await page.locator('#sem-export').click();const file=await pending;return JSON.parse(await fs.readFile(await file.path(),'utf8'));}
+async function download(page){const pending=page.waitForEvent('download');await page.locator(await page.locator('#sem-report-download').isEnabled()?'#sem-report-download':'#sem-export').click();const file=await pending;return JSON.parse(await fs.readFile(await file.path(),'utf8'));}
 async function noOverflow(page){assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'page overflows viewport');}
 for(const viewport of [{width:1440,height:1000},{width:390,height:844},{width:320,height:740}]){
   test(`complete synthetic inquiry path at ${viewport.width}px`,async t=>{
@@ -39,7 +39,7 @@ for(const viewport of [{width:1440,height:1000},{width:390,height:844},{width:32
     await page.locator('#sem-generate').click();await page.locator('#sem-draft').fill('<script>合成草稿</script>');
     const data=await download(page);assert.equal(data.report_type,'SYNTHETIC_VERIFICATION_REPORT');assert.equal(data.expression,'litres');assert.equal(data.facts[0].value,'85');assert.equal(data.workflow.viewed_evidence.length,7);assert.equal(data.workflow.confirmation.status,'等待客户补充资料');assert.equal(data.customer_confirmed,false);assert.equal(data.final_model,null);assert.equal(data.external_writes,0);assert.ok(Object.values(data.metrics).every(x=>x===null));assert.equal(data.current_local_edits.saved,false);assert.equal(data.current_local_edits.draft,'<script>合成草稿</script>');
     await page.locator('#sem-draft').fill('【合成演示 · 尚未发送】请补充当前工况曲线、乙二醇适用性及NPSH资料。');await noOverflow(page);await fs.mkdir(path.join(root,'test-results'),{recursive:true});await page.locator('#sem-findings').screenshot({path:path.join(root,`test-results/evidence-${viewport.width}.png`)});await page.locator('.workflow-nav').screenshot({path:path.join(root,`test-results/workflow-${viewport.width}.png`)});await page.locator('#sem-human').screenshot({path:path.join(root,`test-results/review-${viewport.width}.png`)});
-    await page.locator('#sem-note').fill('修改后的合成备注');assert.equal(await page.locator('#sem-export').isDisabled(),true);
+    await page.locator('#sem-note').fill('修改后的合成备注');assert.equal(await page.locator('#sem-export').isDisabled(),true);assert.equal(await page.locator('#sem-report-download').isDisabled(),true);
     // Saving a draft must not act as a human confirmation.
     await page.locator('#sem-save-draft').click();assert.equal(await page.locator('#sem-export').isDisabled(),true);
     await page.locator('#sem-save-review').click();await page.locator('#sem-invalidate').click();
