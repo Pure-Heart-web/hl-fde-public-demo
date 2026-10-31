@@ -1,0 +1,18 @@
+
+> hl-fde-public-demo@2.1.0 test:browser
+> node --test tests/browser.test.cjs
+
+✔ complete synthetic inquiry path at 1440px (3119.063ms)
+✔ complete synthetic inquiry path at 390px (1908.579291ms)
+✔ complete synthetic inquiry path at 320px (1882.91825ms)
+✔ preset changes, reruns, cancellation races, rejection and reset (6330.867333ms)
+✔ keyboard path to evidence and live region with reduced motion (1224.73375ms)
+✔ HTTP deployment keeps CSP isolation and serves the script order (1560.315416ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16685.273958
