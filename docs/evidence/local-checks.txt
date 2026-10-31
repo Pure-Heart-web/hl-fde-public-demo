@@ -1,0 +1,34 @@
+
+> hl-fde-public-demo@2.1.0 check
+> node --check model.js && node --check workflow.js && node --check app.js && node --test tests/workflow.test.cjs
+
+✔ existing G01 单泵设计流量直接表达 (1.306959ms)
+✔ existing G02 85000 L/h保留换算链 (0.100375ms)
+✔ existing G03 capacity在明确体积流量语境 (0.093875ms)
+✔ existing G04 出口表压不能直接当扬程 (0.084667ms)
+✔ existing G05 清水曲线只形成条件性候选 (0.078541ms)
+✔ existing G06 目录范围不可当设计点证明 (0.066292ms)
+✔ existing G07 30°C上限不能满足40°C (0.063167ms)
+✔ existing G08 R2要求95，撤销旧点支持 (0.0605ms)
+✔ existing G09 篡改quote整批拒绝 (0.067917ms)
+✔ existing G10 失效后候选清零 (0.149167ms)
+✔ existing G11 PN/Class不自动等同 (0.078875ms)
+✔ existing G12 无最终型号、无客户确认 (0.066375ms)
+✔ report requires opened evidence and explicit human decision (2.038583ms)
+✔ opening a duplicate does not inflate evidence count (0.081041ms)
+✔ quote/version corruption cannot complete or retain a confirmation (0.249292ms)
+✔ changed human input revokes confirmation without resolving anomalies (0.117875ms)
+✔ invalidation clears every derived record including human confirmation (0.156958ms)
+✔ new revision and rerun never inherit an earlier confirmation (0.111292ms)
+✔ all presets can complete and keep their original engineering boundaries (1.114917ms)
+✔ rejected proposals cannot be opened, confirmed, or exported as reports (0.090125ms)
+✔ legacy 85/58 behavior is preserved (0.219667ms)
+✔ static entrypoint keeps isolation and local scripts (0.357708ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59.881875

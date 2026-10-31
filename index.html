@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer"><meta name="description" content="面向泵阀、非标设备及出口企业的需求—规格语义对齐与证据核验演示。纯合成数据，本地模拟，不调用模型。">
 <title>猴来工作室 · 让AI读懂要求，让证据约束判断</title>
-<link rel="stylesheet" href="styles.css"><script src="model.js" defer></script><script src="app.js" defer></script>
+<link rel="stylesheet" href="styles.css"><script src="model.js" defer></script><script src="workflow.js" defer></script><script src="app.js" defer></script>
 </head>
 <body>
 <header class="topbar"><a href="#top" class="brand" aria-label="猴来工作室首页"><span class="brand-mark" aria-hidden="true">HL<span>·</span></span><span>猴来工作室<small>工业资料 · 证据核验</small></span></a><span class="header-note"><i></i> 合成数据 · 模拟体验</span><a class="quiet-link" href="#boundaries">演示边界 ↗</a></header>
@@ -14,7 +14,13 @@
 <div class="demo-notice"><span class="notice-icon" aria-hidden="true">i</span><p><strong>模拟核验 · 合成数据。</strong> 页面以预设提案展示大模型未来可承担的理解任务，本地执行证据和规则模拟；<strong>不调用DeepSeek，不代表生产环境验收结果。</strong> 无文件上传、无模型API请求。</p></div>
 <nav class="story-nav" aria-label="页面导览"><a href="#semantic">01 需求—规格对照</a><a href="#engineering">02 工程语义边界</a><a href="#eval">03 Golden与Eval</a><a href="#studio">04 工作室定位</a></nav>
 <section class="semantic-workspace" id="semantic" aria-labelledby="semantic-title">
-  <div class="section-head"><div><div class="eyebrow">FROM REQUIREMENT TO EVIDENCE / 01</div><h2 id="semantic-title">把“可能能用”，拆成有依据的判断。</h2><p class="section-lead">一个客户要求，三份厂家资料。看懂表达只是开始，工况、版本和硬约束决定能否继续。</p></div><span class="tag">人工合成 · 非真实选型</span></div>
+  <div class="section-head"><div><div class="eyebrow">FROM REQUIREMENT TO EVIDENCE / 01</div><h2 id="semantic-title">把“可能能用”，拆成有依据的判断。</h2><p class="section-lead">选择一份合成询盘，发现异常、查看原文证据、确认本地处理记录，再导出核验报告。</p></div><span class="tag">人工合成 · 非真实选型</span></div>
+  <nav class="workflow-nav" aria-label="本次核验操作步骤">
+    <ol><li id="flow-select" aria-current="step">1 选择合成询盘</li><li id="flow-discover">2 发现异常</li><li id="flow-evidence">3 查看证据</li><li id="flow-review">4 人工确认</li><li id="flow-export">5 导出报告</li></ol>
+    <p id="flow-next" role="status">先选择下方资料包，再运行本地模拟。</p>
+    <a id="flow-action" class="outline" href="#sem-run">下一步：发现异常 ↓</a>
+  </nav>
+  <h3 class="flow-heading">1 / 选择合成询盘与配套资料</h3>
   <div class="scenario-strip" role="group" aria-label="深度核验预设"><button type="button" data-scenario="align" aria-pressed="true"><b>01</b> 多样表达与候选初筛<small>85 m³/h @ 32 m · 乙二醇40°C</small></button><button type="button" data-scenario="revision" aria-pressed="false"><b>02</b> 版本变更影响<small>R1 → R2 · 单泵流量85改为95</small></button><button type="button" data-scenario="pressure" aria-pressed="false"><b>03</b> 相近概念的陷阱<small>出口3.2 bar(g) ≠ 已知总扬程</small></button></div>
   <div class="semantic-grid"><aside class="dossier">
     <div class="mini-heading"><span>合成资料包</span><span id="sem-revision">当前询盘 R1</span></div>
@@ -26,13 +32,13 @@
     <p class="micro">不调用大模型。语义提案为人工预设，引用检查与对照规则在本地实际执行。</p>
   </aside><div class="analysis-pane">
     <div class="analysis-top"><span class="mini-heading">需求—规格证据矩阵</span><span id="sem-badge" class="badge neutral">等待核验</span></div>
-    <ol class="semantic-pipeline" aria-label="三层判断"><li id="sem-step-0"><b>1</b> 模拟AI理解<small>字段 · 语义 · 约束</small></li><li id="sem-step-1"><b>2</b> 本地证据检查<small>来源 · 版本 · 原句</small></li><li id="sem-step-2"><b>3</b> 工程规则对照<small>候选 · 缺口 · 硬约束</small></li></ol>
+    <ol class="semantic-pipeline" aria-label="三层判断"><li id="sem-step-0"><b>1</b> 读取预设提案<small>字段 · 语义 · 约束</small></li><li id="sem-step-1"><b>2</b> 本地证据检查<small>来源 · 版本 · 原句</small></li><li id="sem-step-2"><b>3</b> 工程规则对照<small>候选 · 缺口 · 硬约束</small></li></ol>
     <div id="sem-output" aria-live="polite"><div class="semantic-empty"><span>READ → ALIGN → VERIFY</span><h3>不止找到数字，<br>还要找到数字成立的条件。</h3><p>运行后将展示需求结构、三类候选、排除依据和必须澄清的工程问题。</p></div></div>
     <div class="semantic-bottom"><span>最终型号 <b>未批准</b></span><span>客户确认 <b>否</b></span><span>外部写入 <b>0</b></span></div>
-    <div class="panel-actions"><button type="button" id="sem-invalidate" class="outline" disabled>模拟来源失效</button><button type="button" id="sem-export" class="outline" disabled>导出本次证据矩阵 JSON ↗</button><button type="button" id="sem-reset" class="text-button">↺ 重置语义演示</button></div>
+    <div class="panel-actions"><button type="button" id="sem-invalidate" class="outline" disabled>模拟来源失效</button><button type="button" id="sem-export" class="outline" disabled>导出核验报告 JSON ↗</button><button type="button" id="sem-reset" class="text-button">↺ 重置语义演示</button></div>
   </div></div>
-  <div id="sem-reference" class="reference-view" aria-live="polite"><div class="reference-placeholder">点击资料卡或结果中的引用，查看对应的完整合成原句。引用定位不等于真实来源认证。</div></div>
-  <div class="semantic-human"><div><div class="eyebrow">ENGINEER IN THE LOOP</div><h3>把不确定性写进问题，<br>不要写成承诺。</h3><p>本地人工记录与模拟规则结果分开。选择“已内部复核”不会改变候选状态，也不会批准型号。</p><span class="micro">所有编辑仅存本页内存；刷新丢失。请勿填写客户资料。</span></div><fieldset id="sem-human-fields" disabled><legend>人工复核与澄清</legend><div class="review-row"><label for="sem-review">人工处理状态<select id="sem-review"><option>待工程师复核</option><option>已内部复核</option><option>等待客户补充资料</option><option>不适用</option></select></label><label for="sem-note">核实备注<input type="text" id="sem-note" maxlength="1500" placeholder="仅填写合成演示备注"></label></div><div class="panel-actions"><button class="outline" id="sem-save-review" type="button">保存本地复核记录</button><button class="outline" id="sem-generate" type="button">生成有依据的澄清模板</button></div><label for="sem-draft">客户澄清草稿 · 本地模板，非AI实时生成<textarea id="sem-draft" rows="5" maxlength="5000" placeholder="先完成模拟核验，再生成并人工修改草稿。"></textarea></label><div class="panel-actions"><button class="outline" id="sem-save-draft" type="button">保存本地草稿</button><button class="dark-button" id="sem-copy" type="button" disabled>复制当前草稿</button></div><p id="sem-save-state" class="save-status" aria-live="polite">尚无有效记录</p><div id="sem-audit" class="audit-trail" aria-live="polite">尚无本地留痕。</div></fieldset></div>
+  <div id="sem-reference" class="reference-view" tabindex="-1" aria-label="合成原文证据" aria-live="polite"><div class="reference-placeholder">点击资料卡或结果中的引用，查看对应的完整合成原句。引用定位不等于真实来源认证。</div></div>
+  <div class="semantic-human" id="sem-human"><div><div class="eyebrow">ENGINEER IN THE LOOP</div><h3>把不确定性写进问题，<br>不要写成承诺。</h3><p>本地人工记录与模拟规则结果分开。选择“已内部复核”不会改变候选状态，也不会批准型号。</p><span class="micro">所有编辑仅存本页内存；刷新丢失。请勿填写客户资料。</span></div><fieldset id="sem-human-fields" disabled><legend>4 / 人工确认与澄清</legend><div class="review-row"><label for="sem-review">人工处理状态<select id="sem-review"><option>待工程师复核</option><option>已内部复核</option><option>等待客户补充资料</option><option>不适用</option></select></label><label for="sem-note">核实备注<input type="text" id="sem-note" maxlength="1500" placeholder="仅填写合成演示备注"></label></div><label class="review-ack"><input type="checkbox" id="sem-ack"> 我已查看异常引用并确认本地处理记录；这不代表客户确认或业务放行。</label><p id="sem-review-gate" class="micro" role="status"></p><div class="panel-actions"><button class="outline" id="sem-save-review" type="button">确认并保存本地复核记录</button><button class="outline" id="sem-generate" type="button">生成有依据的澄清模板</button></div><label for="sem-draft">客户澄清草稿 · 本地模板，非AI实时生成<textarea id="sem-draft" rows="5" maxlength="5000" placeholder="先完成模拟核验，再生成并人工修改草稿。"></textarea></label><div class="panel-actions"><button class="outline" id="sem-save-draft" type="button">保存本地草稿</button><button class="dark-button" id="sem-copy" type="button" disabled>复制当前草稿</button></div><p id="sem-save-state" class="save-status" aria-live="polite">尚无有效记录</p><div id="sem-audit" class="audit-trail" aria-live="polite">尚无本地留痕。</div><div class="panel-actions"><button class="primary" id="sem-report-download" type="button" disabled>5 / 导出核验报告 JSON ↓</button></div><p class="micro">完成人工确认后可下载；报告保留全部异常和未决问题，不作业务放行。</p></fieldset></div>
 </section>
 <section class="engineering" id="engineering">
   <div class="section-head"><div><div class="eyebrow">INDUSTRIAL CONTEXT MATTERS / 02</div><h2>工程师关心的，远不止两个数字。</h2></div></div>
