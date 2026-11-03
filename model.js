@@ -109,7 +109,7 @@
     return r;
   }
   function usable(r){return !!r&&r.evidence_status==='SIMULATED_QUOTE_MATCH'&&r.outcome==='ENGINEER_REVIEW_REQUIRED';}
-  function invalidate(r){r.outcome='INPUT_INVALIDATED';r.evidence_status='INVALIDATED';for(const k of ['facts','proposed_facts','observations','findings','candidates','clarifications','audit'])r[k]=[];r.review={status:'待工程师复核',note:''};r.draft='';r.final_model=null;r.customer_confirmed=false;r.external_writes=0;return r;}
+  function invalidate(r){r.workflow=null;r.outcome='INPUT_INVALIDATED';r.evidence_status='INVALIDATED';for(const k of ['facts','proposed_facts','observations','findings','candidates','clarifications','audit'])r[k]=[];r.review={status:'待工程师复核',note:''};r.draft='';r.final_model=null;r.customer_confirmed=false;r.external_writes=0;return r;}
   function draft(r){if(!usable(r))throw Error('无有效模拟证据，请重新核验');return '【合成演示 · 待人工审核，尚未发送】\n设备P-201 / '+r.request_revision+'：询盘原文“'+r.sources[0].lines[1]+'”（SYN-RFQ，第2行）。\n候选A仅有清水测试点，尚需确认乙二醇工况及材料适用性；候选B缺Q-H配对点；候选C的30°C上限不满足40°C要求。\n'+r.clarifications.map((s,i)=>(i+1)+'. '+s).join('\n')+'\n以上为待确认问题，不构成选型、性能或报价承诺。';}
   const golden=Object.freeze([
     {id:'G01',task:'等价表达',name:'单泵设计流量直接表达',expected:'85',run:()=>create().facts[0].value},

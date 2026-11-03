@@ -1,0 +1,10 @@
+{
+  "name": "hl-fde-public-demo",
+  "private": true,
+  "version": "2.1.0",
+  "scripts": {
+    "check": "node --check model.js && node --check workflow.js && node --check app.js && node --test tests/workflow.test.cjs",
+    "test:browser": "node --test tests/browser.test.cjs"
+  },
+  "devDependencies": { "playwright": "1.63.0" }
+}
